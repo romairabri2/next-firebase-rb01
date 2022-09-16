@@ -27,7 +27,8 @@ export default function User_App() {
     const [alternManage, setAlternManage] = useState('1')
 
     const [titlePosts, setTitlePost] = useState('')
-    const [paragraphPost, setparagraphPosts] = useState('')
+    const [paragraphPost, setparagraphPost] = useState('')
+    const [newPost, setNewPost] = useState(false)
 
     function getUrlLoginType() {
         const params = new URLSearchParams(window.location.search)
@@ -39,12 +40,45 @@ export default function User_App() {
         setLoginType(getUrlLoginType())
     }, [])
 
+    useEffect(() => {
+
+        const userFnc = (user) => {
+            if (user) {
+                setIsLogin(true)//cuando registre el login me valide el usuario
+                getAllImages(user)
+                getUserPosts(user)
+            } else {
+                console.log('user invalid')
+                setIsLogin(false)//cuando no registre el login me lo invalide
+            }
+        }
+        firebaseAuth.authState(userFnc)//Obtener el estado actual de la sesión del usuario
+    }, [isLogin])
+
+    const getAllImages = async (user) => {
+        const allImages = await firebaseManage.getAllImage(user.uid)
+        const setImagesAux = []
+        allImages.forEach(element => {
+            setImagesAux.push(fileManager.base64toBlob(element.image))
+        });
+        setImages(setImagesAux)
+    }
+
+    const getUserPosts = async (user) => {
+        const userPosts = await firebaseManage.getUserPosts(user.uid)
+
+        const postsAux = []
+        userPosts.forEach(element => {
+            postsAux.push( element )
+        });
+        setPosts(postsAux)
+    }
+
     const handleAddImage = async (e) => {
-        if(imageInput) {
-            //const imagesAux = images.slice()
-            //imagesAux.push(imageInput)
-            //setImages(imagesAux)
+
+        if (imageInput) {
             const base64 = await fileManager.getBase64(imageInput)
+
             images.push(imageInput)
 
             const user = firebaseAuth.getCurrentUser()
@@ -53,22 +87,47 @@ export default function User_App() {
         setImageInput(null)
     }
 
-    /*useEffect(() => {
-        
-        const userFnc = (user) => {
-            if(user) {
-                setIsLogin(true)
-            }else{
-                console.log('user invalid')
-                setIsLogin(false)
-            }
+    const handlePost = () => {
+        setNewPost(!newPost)
+    }
+
+    const handleAddPost = async (e) => {
+        e.preventDefault()
+        const postsAux = posts.slice()
+        const post = {
+            title: titlePosts,
+            paragraph: paragraphPost
         }
 
-        firebaseAuth.authState(userFnc)
-    }, [isLogin])
+        const user = firebaseAuth.getCurrentUser()
+        await firebaseManage.addPost(post, user.uid)
 
-    return (loginType != null ? <UserLogin loginType={loginType} /> : null
-    );*/
+        postsAux.push(post)
+        setPosts(postsAux);
+        handlePost()
+    }
+
+    const backgroundModalStyle = {
+        width: '100%',
+        height: '100%',
+        position:'absolute',
+        zIndex: '9999',
+        background: '#00000055'
+    }
+
+    const modalStyle = {
+        width: '500px',
+        maxWidth: '90%',
+        maxHeight: '50vh',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        zIndex: '9999',
+        background: '#FFF',
+        transform: 'translate(-50%, -50%)',
+        overflow: 'auto',
+        boxShadow: '0px 0px 50px 0px #999999',
+    }
 
     const HeadData = () => {
 
@@ -84,6 +143,36 @@ export default function User_App() {
     return isLogin ? <>
         <HeadData />
 
+        {newPost ? <div style={backgroundModalStyle} onClick={handlePost}>
+            <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
+                <ModalHeader>
+                    Nuevo Post
+                </ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <FormGroup>
+                            <Label>Titulo</Label>
+                            <Input placeholder="Titulo" required
+                                type="text" value={titlePosts}
+                                onChange={(e) => setTitlePost(e.target.value)}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Parrafo</Label>
+                            <Input placeholder="Parrafo" required
+                                type="textarea" value={paragraphPost}
+                                onChange={(e) => setparagraphPost(e.target.value)}
+                            />
+                        </FormGroup>
+                        <Button onClick={ handleAddPost }>
+                            Aceptar
+                        </Button>
+                    </Form>
+                </ModalBody>
+            </div>
+        </div> : null
+        }
+        
         <Container>
             <br />
             <br />
@@ -99,9 +188,9 @@ export default function User_App() {
                         Imagenes
                     </NavLink>
                 </NavItem>
-                <NavItem>
-                    <NavLink className={alternManage === '2' ? 'active' : ''}>
-                        onclick={() => setAlternManage('2')}
+                <NavItem onClick={() => setAlternManage('2')}>
+                    <NavLink className={alternManage === '2' ? 'active' : ''}
+                        onClick={() => setAlternManage('2')} >
                         Posts
                     </NavLink>
                 </NavItem>
@@ -112,9 +201,11 @@ export default function User_App() {
                 <TabPane tabId="1">
                     <Label for="exampleFile"> Subir una imagen</Label>
                     <Input type="file"
+                        onChange={(e) => setImageInput(e.target.files[0])}
                         accept="image/png, image/gif, image/jpeg" />
                     <br />
                     <Button color="primary"
+                        onClick={handleAddImage}
                     >
                         Agregar imagen seleccionada
                     </Button>
@@ -136,6 +227,7 @@ export default function User_App() {
                     <Label for="exampleFile">Escribir un Post</Label>
                     <br />
                     <Button color="primary"
+                        onClick={handlePost}
                     >
                         Nuevo
                     </Button>

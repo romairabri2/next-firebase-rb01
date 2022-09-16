@@ -6,7 +6,16 @@ import { Button } from  'reactstrap';
 export default function ButtonSignOut(){
     
     const handleSignOut = async () => {
-        //firebaseAuth.signOut();
+        const { error, success} = await firebaseAuth.signOutUser()
+        if(error){
+            console.log('Error al cerrar sesion', error)
+        } 
+
+        if (success) {
+            console.log('success', success)
+        }
+
+        window.location.href = '/';
     }
 
     return <Button
