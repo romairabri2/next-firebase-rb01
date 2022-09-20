@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Button, Card, CardTitle, CardText } from 'reactstrap';
+import { ContextAuthProvider } from "../context/AuthContext"
 
 export default function Home() {
 
@@ -20,7 +21,7 @@ export default function Home() {
 
 	return <>
 		<HeadData />
-
+		<ContextAuthProvider>
 		<Container>
 			<br />
 			<br />
@@ -75,5 +76,6 @@ export default function Home() {
 			</Card>
 
 		</Container>
+		</ContextAuthProvider>
 	</>
 }

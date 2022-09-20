@@ -1,5 +1,24 @@
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAmct_9jVbVS2kyCK82-CsLF2565hn8qog",
+  authDomain: "next-firebase-rb3.firebaseapp.com",
+  projectId: "next-firebase-rb3",
+  storageBucket: "next-firebase-rb3.appspot.com",
+  messagingSenderId: "73395168002",
+  appId: "1:73395168002:web:04a4687b01311d8f27181b"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+export { auth };
+
 //Inicializacion de firebase
-import firebase from 'firebase/compat/app';
+/*import firebase from 'firebase/compat/app';
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -21,4 +40,4 @@ if (!firebase.apps.length) {
     firebase.app(); // if already initialized, use that one 
 }  
 
-export default firebase
+export default firebase*/

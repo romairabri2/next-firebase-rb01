@@ -40,7 +40,7 @@ export default function User_App() {
         setLoginType(getUrlLoginType())
     }, [])
 
-    useEffect(() => {
+    /*useEffect(() => {
 
         const userFnc = (user) => {
             if (user) {
@@ -53,7 +53,7 @@ export default function User_App() {
             }
         }
         firebaseAuth.authState(userFnc)//Obtener el estado actual de la sesión del usuario
-    }, [isLogin])
+    }, [isLogin])*/
 
     const getAllImages = async (user) => {
         const allImages = await firebaseManage.getAllImage(user.uid)
