@@ -67,7 +67,7 @@ export default function UserLogin({ loginType }) {
     };*/
 
     //Register users in firebase
-    async function registerUser() {
+    /*async function registerUser() {
         try {
             await createUserWithEmailAndPassword(
                 auth,
@@ -80,7 +80,7 @@ export default function UserLogin({ loginType }) {
         } catch (error) {
             console.log(error);
         }
-    }
+    }*/
 
     const loginUser = async () => {
         
@@ -155,7 +155,14 @@ export default function UserLogin({ loginType }) {
                         />
                     </FormGroup>
 
-                    <Button color="primary" onClick={loginUser}>
+                    <Button color="primary" onClick={async ()=> {
+                        const {error, user} = await firebaseAuth.signWithEmail(loginCredentials.email,
+                            loginCredentials.password)
+                        if(error){
+                            console.log(error)
+                            alert('error:', error)
+                        }
+                    }}>
                         Iniciar sesión
                     </Button> 
                 </Form>
@@ -195,13 +202,13 @@ export default function UserLogin({ loginType }) {
                                 alert('error: ', error)
                             }else{
                                 await firebaseManage.addNewUser( user )
-
-                                var url = windows.location.href;
+                                push("/"); //Return to the main route
+                                /*var url = windows.location.href;
                                 if (url.indexOf('?') > -1){
                                     url = url.substring(0, url.indexOf('?'))
                                 }
                                 url += '?loginType=login'
-                                window.location.href = url;
+                                window.location.href = url;*/
                             }
                         }}>
                         Registrarse

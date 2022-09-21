@@ -55,6 +55,7 @@ const signOutUser = async () => {
       })
 }
 
+//Every time we reload the page it will tell us if the user's session is valid or not
 const authState = async (userFnc) => {
     const auth = getAuth();
     onAuthStateChanged(auth, userFnc); 

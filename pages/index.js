@@ -11,7 +11,7 @@ import AuthContext from "../context/AuthContext";
 import { useAuthUser } from "../hooks/useAuthUser";
 
 export default function Home() {
-	
+
   const { isLogged } = useContext(AuthContext);
 
   const HeadData = () => {
@@ -44,9 +44,6 @@ export default function Home() {
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum.
           </p>
-
-          {isLogged === false && (
-            <Fragment>
               <br />
               <CardText style={{ textAlign: "center", whiteSpace: "pre-wrap" }}>
                 {
@@ -70,8 +67,6 @@ export default function Home() {
                 </Link>
               </div>
               <br />
-            </Fragment>
-          )}
           <br />
           <Card body style={{ boxShadow: "0px 0px 10px 0px #00000055" }}>
             <CardTitle tag="h5">Blog</CardTitle>

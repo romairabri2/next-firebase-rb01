@@ -1,4 +1,29 @@
-import { initializeApp } from "firebase/app";
+import firebase from 'firebase/compat/app';
+
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAbKN-pGAsLMnEqD_PNSyLHRShCyto37HY",
+    authDomain: "next-firebase-rb0133.firebaseapp.com",
+    projectId: "next-firebase-rb0133",
+    storageBucket: "next-firebase-rb0133.appspot.com",
+    messagingSenderId: "218577844514",
+    appId: "1:218577844514:web:d047cc8a27451203018d7b",
+    measurementId: "G-Q13QYL2KB6"
+  };
+
+if (!firebase.apps.length) {
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);  
+}else {
+    firebase.app(); // if already initialized, use that one 
+}  
+
+export default firebase
+
+
+/*import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
@@ -15,7 +40,7 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-export { auth };
+export { auth };*/
 
 //Inicializacion de firebase
 /*import firebase from 'firebase/compat/app';

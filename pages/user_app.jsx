@@ -16,13 +16,16 @@ import {
 } from 'reactstrap';
 
 export default function User_App() {
-
+    //This status component allows us to verify whether or not you have access to the information
     const [isLogin, setIsLogin] = useState(false)
+    //So that in case the user is not registered, the registration form or the login form is displayed
     const [loginType, setLoginType] = useState(null)
 
+    //In these variables we will save the posts and images
     const [posts, setPosts] = useState([])
     const [images, setImages] = useState([])
 
+     //when an image is selected it is temporarily saved in this state variable
     const [imageInput, setImageInput] = useState()
     const [alternManage, setAlternManage] = useState('1')
 
@@ -40,7 +43,7 @@ export default function User_App() {
         setLoginType(getUrlLoginType())
     }, [])
 
-    /*useEffect(() => {
+    useEffect(() => {
 
         const userFnc = (user) => {
             if (user) {
@@ -53,7 +56,7 @@ export default function User_App() {
             }
         }
         firebaseAuth.authState(userFnc)//Obtener el estado actual de la sesión del usuario
-    }, [isLogin])*/
+    }, [isLogin])
 
     const getAllImages = async (user) => {
         const allImages = await firebaseManage.getAllImage(user.uid)
