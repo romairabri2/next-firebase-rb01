@@ -9,16 +9,18 @@ import AuthContext from "../context/AuthContext";
 export const useAuthUser = () => {
     const { push, pathname } = useRouter();
 
-    useContext()
+    const { setisLogged } = useContext(AuthContext)
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             let userLogged = user === null ? false : true;
 
             if(!userLogged) {
-                push("/login")
+                push("/user_app/?loginType=login")
+                setisLogged(false)
             }else{
-                if(pathname === "/login" || pathname === "/register") {
+                setisLogged(true)
+                if(pathname === "/user_app/?loginType=register" || pathname === "//user_app/?loginType=login") {
                     push("/");
                 }
             }

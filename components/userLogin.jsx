@@ -56,13 +56,13 @@ export default function UserLogin({ loginType }) {
     const [Message, setMessage] = useState("");
     const [ShowNotification, setShowNotification] = useState(false);
 
-    const showMessage = (message) => {
+    /*const showMessage = (message) => {
         setMessage(message);
         setShowNotification(true);
         setTimeout(() => {
             setShowNotification(false);
         }, 2800);
-    };
+    };*/
 
     //Register users in firebase
     async function registerUser() {
@@ -89,7 +89,7 @@ export default function UserLogin({ loginType }) {
             push("/");
         } catch ({ message }) {
             if (message === "Firebase: Error (auth/wrong-password).") {
-                showMessage("Contraseña incorrecta");
+                //showMessage("Contraseña incorrecta");
                 Store.addNotification({
                     title: "Error de autenticación!",
                     message: "Contraseña incorrecta",
