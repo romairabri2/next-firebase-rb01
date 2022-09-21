@@ -15,6 +15,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useRouter } from "next/router"
+//import firebase_auth from '../firebase/firebase_auth';
+//import firebase_manage from '../firebase/firebase_manage';
 //-------------------------------------------------------//
 
 export default function UserLogin({ loginType }) {
@@ -53,8 +55,8 @@ export default function UserLogin({ loginType }) {
         });
     };
 
-    const [Message, setMessage] = useState("");
-    const [ShowNotification, setShowNotification] = useState(false);
+    //const [Message, setMessage] = useState("");
+    //const [ShowNotification, setShowNotification] = useState(false);
 
     /*const showMessage = (message) => {
         setMessage(message);
@@ -72,6 +74,8 @@ export default function UserLogin({ loginType }) {
                 registerCredentials.email,
                 registerCredentials.password
             );
+
+
             push("/"); //Return to the main route
         } catch (error) {
             console.log(error);
@@ -182,7 +186,24 @@ export default function UserLogin({ loginType }) {
                     </FormGroup>
 
                     <Button color="primary"
-                        onClick={registerUser}>
+                        onClick={async ()=> {
+                            const {user, error} = await firebaseAuth.registerWithEmail(registerCredentials.email,
+                                registerCredentials.password)
+                            
+                            if(error != null){
+                                console.log('error', error)
+                                alert('error: ', error)
+                            }else{
+                                await firebaseManage.addNewUser( user )
+
+                                var url = windows.location.href;
+                                if (url.indexOf('?') > -1){
+                                    url = url.substring(0, url.indexOf('?'))
+                                }
+                                url += '?loginType=login'
+                                window.location.href = url;
+                            }
+                        }}>
                         Registrarse
                     </Button>
                     {' '}
