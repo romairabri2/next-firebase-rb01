@@ -1,14 +1,15 @@
 import { useEffect, useContext } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+//import { auth } from "../firebase/firebase";
 import { useRouter } from "next/router";
 import AuthContext from "../context/AuthContext";
 
 //onAuthStateChanged permite verificar si el usuario ha iniciado sesión
 
 export const useAuthUser = () => {
-    const { push, pathname } = useRouter();
 
+    const auth = getAuth();
+    const { push, pathname } = useRouter();
     const { setisLogged } = useContext(AuthContext)
 
     useEffect(() => {

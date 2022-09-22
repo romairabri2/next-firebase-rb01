@@ -12,7 +12,7 @@ export default function Blog(){
 
     const getAllPosts = async () => {
         
-        const allPosts = await firebaseManage.getAllPosts()
+        const allPosts = await firebaseManage.getAllPosts();
         setPosts(allPosts)
     }
 
@@ -39,7 +39,7 @@ export default function Blog(){
             <Link href={`/blog/${post.document_id}`}>
                 <div>
                     <Card body
-                    color="secundary"
+                    color="secondary"
                     inverse style={{margin: '20px 0'}}>
                         <CardTitle tag="h5">
                             {post.title}

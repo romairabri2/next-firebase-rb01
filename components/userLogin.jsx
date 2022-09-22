@@ -82,7 +82,7 @@ export default function UserLogin({ loginType }) {
         }
     }*/
 
-    const loginUser = async () => {
+    /*const loginUser = async () => {
         
         try {
             await signInWithEmailAndPassword(
@@ -109,7 +109,7 @@ export default function UserLogin({ loginType }) {
                   });
             }
         }
-    };
+    };*/
     //------------------------------------------------//
                              
     const modalStyle = {

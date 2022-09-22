@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import UserLogin from "../components/userLogin";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ButtonSignOut from '../components/signOut';
+import Image from 'next/image'
 
 import fileManager from '../utils/fileManager';
 
@@ -219,7 +220,7 @@ export default function User_App() {
                             ? images.map((image, index) => {
                                 return <Col key={index} sm="6">
                                     <Card body style={{ margin: '15px 0' }}>
-                                        <img alt={image.name} src={URL.createObjectURL(image)} />
+                                        <Image alt={image.name} src={URL.createObjectURL(image)} width={'150px'} height={'600px'}/>
                                     </Card>
                                 </Col>
                             })
