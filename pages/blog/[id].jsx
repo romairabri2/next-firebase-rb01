@@ -19,6 +19,23 @@ export default function Post(props){
         return t;
     }
 
+    const MESES = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+    ];
+
+
+
     return <Container>
         <br/>
         <Card body>
@@ -27,7 +44,7 @@ export default function Post(props){
                 {post.title}
             </CardTitle>
             <CardText>
-                {'FECHA'}
+                {`Creado el ${dateParsed.getDate()} de ${MESES[dateParsed.getMonth()]} de ${dateParsed.getFullYear()} por ${post.created_by}`}
             </CardText>
             </CardBody>
         </Card>
